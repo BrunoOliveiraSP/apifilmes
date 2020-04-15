@@ -1,0 +1,5 @@
+dotnet tool install --global dotnet-ef
+
+
+
+dotnet ef dbcontext scaffold "server=localhost;user id=root;password=1234;database=apiDB" Pomelo.EntityFrameworkCore.MySql -o Models --data-annotations --force
