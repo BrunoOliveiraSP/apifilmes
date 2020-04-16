@@ -1,5 +1,23 @@
+
+
+// Mapear MySQL
+
 dotnet tool install --global dotnet-ef
 
-
-
 dotnet ef dbcontext scaffold "server=localhost;user id=root;password=1234;database=apiDB" Pomelo.EntityFrameworkCore.MySql -o Models --data-annotations --force
+
+
+
+
+// Circular reference
+
++ Nuget Package: Microsoft.AspnetCore.Mvc.NewtonsoftJson
+
+using NewtonsoftJson.Json;
+
+services.AddControllers()
+    .AddNewtonsoftJson(x => {
+        x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+    })
+
+    

@@ -18,9 +18,11 @@ namespace apifilmes.Models
         [Column("id_ator")]
         public int? IdAtor { get; set; }
 
+
         [ForeignKey(nameof(IdAtor))]
         [InverseProperty(nameof(TbAtor.TbFilmeAtor))]
         public virtual TbAtor IdAtorNavigation { get; set; }
+
         [ForeignKey(nameof(IdFilme))]
         [InverseProperty(nameof(TbFilme.TbFilmeAtor))]
         public virtual TbFilme IdFilmeNavigation { get; set; }
