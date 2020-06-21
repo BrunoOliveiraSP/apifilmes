@@ -18,7 +18,7 @@ namespace apifilmes.Controllers
         [HttpPost]
         public void Salvar(Models.Request.FilmeAtorRequest request)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             foreach (Models.Request.FilmeAtorItemRequest item in request.Atores)
             {
@@ -44,7 +44,7 @@ namespace apifilmes.Controllers
         [HttpPost("encadeado")]
         public void SalvarEncadeado(List<Models.TbAtor> atores)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
             ctx.TbAtor.AddRange(atores);
             ctx.SaveChanges();
         }
@@ -70,7 +70,7 @@ namespace apifilmes.Controllers
                 }).ToList();
 
             
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
             ctx.TbAtor.AddRange(atores);
             ctx.SaveChanges();
         }
@@ -103,7 +103,7 @@ namespace apifilmes.Controllers
 
 
             
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
             ctx.TbFilme.Add(filme);
             ctx.SaveChanges();
         }
@@ -115,7 +115,7 @@ namespace apifilmes.Controllers
         [HttpGet]
         public List<Models.Response.FilmeAtorResponse> ListarFilmes()
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             List<Models.TbFilme> filmes = 
                 ctx.TbFilme
@@ -165,7 +165,7 @@ namespace apifilmes.Controllers
         [HttpPut]
         public void Alterar(Models.TbFilmeAtor filmeAtor)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             Models.TbFilmeAtor atual = ctx.TbFilmeAtor.First(x => x.IdFilmeAtor == filmeAtor.IdFilmeAtor);
             atual.NmPersonagem = filmeAtor.NmPersonagem;
@@ -178,7 +178,7 @@ namespace apifilmes.Controllers
         [HttpDelete]
         public void Remover(Models.TbFilmeAtor filmeAtor)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
             
             Models.TbFilmeAtor atual = ctx.TbFilmeAtor.First(x => x.IdFilmeAtor == filmeAtor.IdFilmeAtor);
             

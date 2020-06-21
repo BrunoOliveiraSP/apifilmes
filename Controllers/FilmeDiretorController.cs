@@ -17,7 +17,7 @@ namespace apifilmes.Controllers
         [HttpPost]
         public Models.Request.FilmeDiretorRequest Salvar(Models.Request.FilmeDiretorRequest request)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             ctx.TbFilme.Add(request.Filme);
             ctx.SaveChanges();
@@ -34,7 +34,7 @@ namespace apifilmes.Controllers
         [HttpPost("encadeado")]
         public Models.TbFilme SalvarEncadeado(Models.TbFilme filme)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             ctx.TbFilme.Add(filme);
             ctx.SaveChanges();
@@ -47,7 +47,7 @@ namespace apifilmes.Controllers
         [HttpGet("consultar/diretor")]
         public List<Models.TbDiretor> Consultar(string diretor, string genero)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             List<Models.TbDiretor> diretores = 
                 ctx.TbDiretor
@@ -64,7 +64,7 @@ namespace apifilmes.Controllers
         [HttpGet("consultar/filme")]
         public List<Models.TbFilme> ConsultarFilmes(string genero, string diretor)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             List<Models.TbFilme> filmes = 
                 ctx.TbFilme

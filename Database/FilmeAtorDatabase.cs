@@ -8,7 +8,7 @@ namespace apifilmes.Database
 {
     public class FilmeAtorDatabase
     {
-        Models.apiDBContext ctx = new Models.apiDBContext();
+        Models.apidbContext ctx = new Models.apidbContext();
 
 
         public List<Models.TbFilme> Consultar(string genero, string personagem, string ator)

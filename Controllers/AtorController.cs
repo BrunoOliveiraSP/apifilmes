@@ -16,7 +16,7 @@ namespace apifilmes.Controllers
         [HttpPost]
         public Models.TbAtor Salvar(Models.TbAtor ator)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
             
             ctx.TbAtor.Add(ator);
             ctx.SaveChanges();

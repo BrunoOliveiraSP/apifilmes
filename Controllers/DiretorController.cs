@@ -18,7 +18,7 @@ namespace apifilmes.Controllers
         [HttpPost]
         public Models.TbDiretor Salvar(Models.TbDiretor diretor)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             ctx.TbDiretor.Add(diretor);
             ctx.SaveChanges();
@@ -32,7 +32,7 @@ namespace apifilmes.Controllers
         [HttpPost("filme")]
         public Models.Response.DiretorPorFilmeNomeResponse SalvarPorFilmeNome(Models.Request.DiretorPorFilmeNomeRequest diretorReq)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
             Models.TbFilme filme = ctx.TbFilme.First(x => x.NmFilme == diretorReq.NmFilme);
             
             Models.TbDiretor diretor = new Models.TbDiretor();
@@ -62,7 +62,7 @@ namespace apifilmes.Controllers
         [HttpGet]
         public List<Models.Response.DiretorResponse> Listar()
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             List<Models.TbDiretor> diretores = 
                 ctx.TbDiretor
@@ -88,7 +88,7 @@ namespace apifilmes.Controllers
         [HttpPut]
         public void Alterar(Models.TbDiretor diretor)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             Models.TbDiretor atual = ctx.TbDiretor.First(x => x.IdDiretor == diretor.IdDiretor);
             atual.NmDiretor = diretor.NmDiretor;
@@ -102,7 +102,7 @@ namespace apifilmes.Controllers
         [HttpDelete]
         public void Deletar(Models.TbDiretor diretor)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
+            Models.apidbContext ctx = new Models.apidbContext();
 
             Models.TbDiretor atual = ctx.TbDiretor.First(x => x.IdDiretor == diretor.IdDiretor);
 
