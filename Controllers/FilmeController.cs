@@ -13,27 +13,38 @@ namespace apifilmes.Controllers
     [Route("[controller]")]
     public class FilmeController : ControllerBase
     {
+        Business.FilmeBusiness filmeBusiness = new Business.FilmeBusiness();
 
 
         [HttpPost]
-        public Models.TbFilme Salvar(Models.TbFilme filme)
+        public ActionResult<Models.TbFilme> Salvar(Models.TbFilme filme)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
-            
-            ctx.TbFilme.Add(filme);
-            ctx.SaveChanges();
-
-            return filme;
+            try
+            {
+                Models.TbFilme f = filmeBusiness.Salvar(filme);
+                return f;    
+            }
+            catch (System.Exception ex)
+            {
+                return new BadRequestObjectResult(
+                    new Models.Response.ErroResponse(ex, 400)
+                );
+            }
         }
+
+
+
+
+
+
+
 
 
         [HttpGet]
         public List<Models.TbFilme> Listar()
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
-
-            List<Models.TbFilme> filmes = ctx.TbFilme.ToList();
-            return filmes;
+            List<Models.TbFilme> filmes = filmeBusiness.Listar();
+            return filmes; 
         }
 
 
@@ -41,10 +52,7 @@ namespace apifilmes.Controllers
         [HttpGet("consultar")]
         public List<Models.TbFilme> Consultar(string genero)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
-
-            List<Models.TbFilme> filmes = ctx.TbFilme.Where(x => x.DsGenero == genero)
-                                                     .ToList();
+            List<Models.TbFilme> filmes = filmeBusiness.Consultar(genero);
             return filmes;
         }
 
@@ -53,29 +61,14 @@ namespace apifilmes.Controllers
         [HttpPut]
         public void Alterar(Models.TbFilme filme)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
-
-            Models.TbFilme atual = ctx.TbFilme.First(x => x.IdFilme == filme.IdFilme);
-            atual.NmFilme = filme.NmFilme;
-            atual.DsGenero = filme.DsGenero;
-            atual.NrDuracao = filme.NrDuracao;
-            atual.VlAvaliacao = filme.VlAvaliacao;
-            atual.BtDisponivel = filme.BtDisponivel;
-            atual.DtLancamento = filme.DtLancamento;
-
-            ctx.SaveChanges();
+            filmeBusiness.Alterar(filme);
         }
 
 
         [HttpPut("disponibilidade")]
         public void AlterarDisponibilidade(Models.TbFilme filme)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
-
-            Models.TbFilme atual = ctx.TbFilme.First(x => x.IdFilme == filme.IdFilme);
-            atual.BtDisponivel = filme.BtDisponivel;
-            
-            ctx.SaveChanges();
+            filmeBusiness.AlterarDisponibilidade(filme);
         }
 
 
@@ -83,25 +76,14 @@ namespace apifilmes.Controllers
         [HttpDelete]
         public void Remover(Models.TbFilme filme)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
-
-            Models.TbFilme atual = ctx.TbFilme.First(x => x.IdFilme == filme.IdFilme);
-            ctx.TbFilme.Remove(atual);
-
-            ctx.SaveChanges();
+            filmeBusiness.Remover(filme);
         }
 
         
         [HttpDelete("genero")]
         public void RemoverPorGenero(Models.TbFilme filme)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
-
-            List<Models.TbFilme> filmes = ctx.TbFilme.Where(x => x.DsGenero == filme.DsGenero)
-                                                     .ToList();
-
-            ctx.TbFilme.RemoveRange(filmes);
-            ctx.SaveChanges();
+            filmeBusiness.RemoverPorGenero(filme);
         }
 
 

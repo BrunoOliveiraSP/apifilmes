@@ -12,7 +12,8 @@ namespace apifilmes.Controllers
     [Route("[controller]")]
     public class FilmeAtorController  : ControllerBase
     {
-        
+        Business.FilmeAtorBusiness filmeAtorBusiness = new Business.FilmeAtorBusiness();
+
 
         [HttpPost]
         public void Salvar(Models.Request.FilmeAtorRequest request)
@@ -153,40 +154,8 @@ namespace apifilmes.Controllers
         [HttpGet("consultar")]
         public List<Models.Response.FilmeAtorResponse> Consultar(string genero, string personagem, string ator)
         {
-            Models.apiDBContext ctx = new Models.apiDBContext();
-
-            List<Models.TbFilme> filmes = 
-                ctx.TbFilme
-                      .Include(x => x.TbFilmeAtor)
-                      .ThenInclude(x => x.IdAtorNavigation)
-                   .Where(x => x.DsGenero == genero 
-                            && x.TbFilmeAtor.Any(f => f.NmPersonagem.Contains(personagem)
-                                                   && f.IdAtorNavigation.NmAtor.Contains(ator)))
-                   .ToList();
-
-
-            List<Models.Response.FilmeAtorResponse> response =
-                filmes.Select(x => new Models.Response.FilmeAtorResponse()
-                {
-                    Filme = new Models.Response.FilmeAtorItemFilmeResponse()
-                    {
-                        Id = x.IdFilme,
-                        Filme = x.NmFilme,
-                        Genero = x.DsGenero,
-                        Avaliacao = x.VlAvaliacao,
-                        Duracao = x.NrDuracao,
-                        Disponivel = x.BtDisponivel,
-                        Lancamento = x.DtLancamento
-                    },
-                    Atores = x.TbFilmeAtor.Select(f => new Models.Response.FilmeAtorItemAtorResponse()
-                    {
-                        IdAtor = f.IdAtorNavigation.IdAtor,
-                        IdFilmeAtor = f.IdFilmeAtor,
-                        Ator = f.IdAtorNavigation.NmAtor,
-                        Personagem = f.NmPersonagem
-                    }).ToList()
-                }).ToList();
-
+            List<Models.Response.FilmeAtorResponse> response = 
+                filmeAtorBusiness.Consultar(genero, personagem, ator);
             return response;
         }
         
